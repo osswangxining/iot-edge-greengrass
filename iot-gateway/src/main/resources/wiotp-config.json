@@ -1,0 +1,105 @@
+{
+  "brokers": [
+    {
+      "host": "u88ncg.messaging.internetofthings.ibmcloud.com",
+      "port": 8883,
+      "ssl": true,
+      "retryInterval": 10000,
+      "clientId": "a:u88ncg:thingsboardclient001",
+      "credentials": {
+        "type": "basic",
+        "username": "a-u88ncg-1qo8utyxwr",
+        "password": "KB?fB1sG-1GFb?wLvx"
+      },
+      "mapping": [
+        {
+          "topicFilter": "iot-2/type/DC_SensorType/id/+/evt/temp/fmt/json",
+          "converter": {
+            "type": "json",
+            "filterExpression": "",
+            "deviceNameTopicExpression": "(?<=iot-2/type/DC_SensorType/id\/)(.*?)(?=\/evt/temp/fmt/json)",
+            "attributes": [
+              {
+                "type": "string",
+                "key": "name",
+                "value": "${$.name}"
+              }
+            ],
+            "timeseries": [
+              {
+                "type": "double",
+                "key": "temperature",
+                "value": "${$.value}"
+              }
+            ]
+          }
+        }
+        
+      ],
+      "connectRequests": [
+        {
+          "topicFilter": "sensors/connect",
+          "deviceNameJsonExpression": "${$.serialNumber}"
+        },
+        {
+          "topicFilter": "sensor/+/connect",
+          "deviceNameTopicExpression": "(?<=sensor\/)(.*?)(?=\/connect)"
+        }
+      ],
+      "disconnectRequests": [
+        {
+          "topicFilter": "sensors/disconnect",
+          "deviceNameJsonExpression": "${$.serialNumber}"
+        },
+        {
+          "topicFilter": "sensor/+/disconnect",
+          "deviceNameTopicExpression": "(?<=sensor\/)(.*?)(?=\/disconnect)"
+        }
+      ],
+      "attributeRequests": [
+        {
+          "topicFilter": "sensors/attributes",
+          "deviceNameJsonExpression": "${$.serialNumber}",
+          "attributeKeyJsonExpression": "${$.key}",
+          "requestIdJsonExpression": "${$.requestId}",
+          "clientScope": false,
+          "responseTopicExpression": "sensors/${deviceName}/attributes/${responseId}",
+          "valueExpression": "{\"${attributeKey}\":\"${attributeValue}\"}"
+        },
+        {
+          "topicFilter": "sensors/+/attributes/+/request/+",
+          "deviceNameTopicExpression": "(?<=sensors\/)(.*?)(?=\/attributes)",
+          "attributeKeyTopicExpression": "(?<=attributes\/)(.*?)(?=\/request)",
+          "requestIdTopicExpression": "(?<=request\/)(.*?)($)",
+          "clientScope": false,
+          "responseTopicExpression": "sensors/${deviceName}/attributes/${attributeKey}/response/${requestId}",
+          "valueExpression": "${attributeValue}"
+        }
+      ],
+      "attributeUpdates": [
+        {
+          "deviceNameFilter": ".*",
+          "attributeFilter": ".*",
+          "topicExpression": "sensor/${deviceName}/${attributeKey}",
+          "valueExpression": "{\"${attributeKey}\":\"${attributeValue}\"}"
+        }
+      ],
+      "serverSideRpc": [
+        {
+          "deviceNameFilter": ".*",
+          "methodFilter": "echo",
+          "requestTopicExpression": "sensor/${deviceName}/request/${methodName}/${requestId}",
+          "responseTopicExpression": "sensor/${deviceName}/response/${methodName}/${requestId}",
+          "responseTimeout": 10000,
+          "valueExpression": "${params}"
+        },
+        {
+          "deviceNameFilter": ".*",
+          "methodFilter": "no-reply",
+          "requestTopicExpression": "sensor/${deviceName}/request/${methodName}/${requestId}",
+          "valueExpression": "${params}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+application:
+  title: IoT Gateway
+  formatted-version: 1.0.0
+gateway:
+  reporting:
+    interval: 60000
+  persistence:
+    type: file
+    path: storage
+    bufferSize: 1000
+  connection:
+    host: "127.0.0.1"
+    port: 1883
+    retryInterval: 3000
+    maxInFlight: 1000
+    security:
+      accessToken: Fd34au32sDkd4KFt7qWD
+#      keystore: mqttclient.jks
+#      keystorePassword: password
+#      keystoreKeyAlias: clientalias
+#      truststore: mqttclient.jks
+#      truststorePassword: password
+
+mqtt:
+  enabled: false
+  configuration: mqtt-config.json
+
+wiotp:
+  enabled: true
+  configuration: wiotp-config.json
+  
+server:
+  # Server bind address
+  address: "0.0.0.0"
+  # Server bind port
+  port: "9093"
