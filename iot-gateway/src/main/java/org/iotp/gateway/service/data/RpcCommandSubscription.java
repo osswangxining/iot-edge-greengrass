@@ -11,11 +11,11 @@ import lombok.Data;
 @AllArgsConstructor
 public class RpcCommandSubscription {
 
-  private String deviceNameFilter;
-  private RpcCommandListener listener;
+    private String deviceNameFilter;
+    private RpcCommandListener listener;
 
-  public boolean matches(String deviceName) {
-    return deviceName.matches(deviceNameFilter);
-  }
+    public boolean matches(String deviceName) {
+        return deviceName.matches(deviceNameFilter);
+    }
 
 }
