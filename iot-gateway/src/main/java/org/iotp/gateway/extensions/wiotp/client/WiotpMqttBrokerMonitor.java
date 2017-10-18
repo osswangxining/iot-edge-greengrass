@@ -205,12 +205,12 @@ public class WiotpMqttBrokerMonitor implements MqttCallback, AttributesUpdateLis
         }
     }
 
-    private void onDeviceConnect(String deviceName) {
-        log.info("[{}] Device connected!", deviceName);
-        gateway.onDeviceConnect(deviceName);
+    private void onDeviceConnect(String deviceName, String deviceType) {
+        log.info("[{}] Device with type {} connected!", deviceName, deviceType);
+        gateway.onDeviceConnect(deviceName, deviceType);
     }
 
-    private void onDeviceDisconnect(String deviceName) {
+    private void onDeviceDisconnect(String deviceName, String deviceType) {
         log.info("[{}] Device disconnected!", deviceName);
         gateway.onDeviceDisconnect(deviceName);
         log.debug("[{}] Will Topic Msg Received. Disconnecting device...", deviceName);
@@ -220,7 +220,7 @@ public class WiotpMqttBrokerMonitor implements MqttCallback, AttributesUpdateLis
     private void onDeviceData(List<DeviceData> data) {
         for (DeviceData dd : data) {
             if (devices.add(dd.getName())) {
-                gateway.onDeviceConnect(dd.getName());
+            		gateway.onDeviceConnect(dd.getName(), dd.getType());
             }
             if (!dd.getAttributes().isEmpty()) {
                 gateway.onDeviceAttributesUpdate(dd.getName(), dd.getAttributes());
