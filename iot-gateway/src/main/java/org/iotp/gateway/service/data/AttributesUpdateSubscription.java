@@ -11,10 +11,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class AttributesUpdateSubscription {
 
-  private String deviceNameFilter;
-  private AttributesUpdateListener listener;
+    private String deviceNameFilter;
+    private AttributesUpdateListener listener;
 
-  public boolean matches(String deviceName) {
-    return deviceName.matches(deviceNameFilter);
-  }
+    public boolean matches(String deviceName) {
+        return deviceName.matches(deviceNameFilter);
+    }
 }

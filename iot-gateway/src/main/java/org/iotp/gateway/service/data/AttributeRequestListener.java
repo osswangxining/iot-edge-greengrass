@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class AttributeRequestListener {
-  private final AttributeRequest request;
-  private final Consumer<AttributeResponse> listener;
+    private final AttributeRequest request;
+    private final Consumer<AttributeResponse> listener;
 }

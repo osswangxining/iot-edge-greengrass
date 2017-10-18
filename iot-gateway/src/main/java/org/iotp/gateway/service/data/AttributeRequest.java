@@ -9,11 +9,11 @@ import lombok.Data;
 @Builder
 public class AttributeRequest {
 
-  private final int requestId;
-  private final String deviceName;
-  private final String attributeKey;
+    private final int requestId;
+    private final String deviceName;
+    private final String attributeKey;
 
-  private final boolean clientScope;
-  private final String topicExpression;
-  private final String valueExpression;
+    private final boolean clientScope;
+    private final String topicExpression;
+    private final String valueExpression;
 }

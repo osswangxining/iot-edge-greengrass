@@ -6,6 +6,6 @@ import lombok.Data;
  */
 @Data
 public class AttributeRequestKey {
-  private final int requestId;
-  private final String deviceName;
+    private final int requestId;
+    private final String deviceName;
 }
