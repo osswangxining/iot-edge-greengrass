@@ -11,7 +11,7 @@ public class TempSensorApplication {
     TempSensor sensor = new TempSensor();
     DirectProvider dp = new DirectProvider();
     Topology topology = dp.newTopology();
-    TStream<Double> tempReadings = topology.poll(sensor, 100, TimeUnit.MILLISECONDS);
+    TStream<Double> tempReadings = topology.poll(sensor, 1, TimeUnit.MILLISECONDS);
     TStream<Double> filteredReadings = tempReadings.filter(reading -> reading < 50 || reading > 80);
 
     filteredReadings.print();
